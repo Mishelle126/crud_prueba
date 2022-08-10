@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Veterinaria</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'main.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <h1>Bienvenido</h1>
+
+                    <form action="{% url 'create_vete' %}" method="POST" class="card card-body bg-secondary">
+                         {% csrf_token %}
+                        <input type="text" name="dueño" placeholder="Nombre del Dueño" class="form-control">
+                        <input type="text" name="apellido" placeholder="Apellido del Dueño" class="form-control">
+                        <input type="text" name="mascota" placeholder="Tipo de mascota" class="form-control">
+                        <input type="text" name="raza" placeholder="Escribe la raza" class="form-control">
+                        <input type="text" name="agencia" placeholder="Nombre de la Agencia" class="form-control">
+            
+                        <button>Save</button>
+                        
+                    </form>
+            
+                    {% for vete in vete %}
+                    <div>
+                        <h3>{{vete.dueño}}</h3>
+                        <h4>{{vete.apellido}}</h4>
+                        <h5>{{vete.mascota}}</h5>
+                        <h6>{{vete.raza}}</h6>
+                        <p>{{vete.agencia}}</p>
+                        <form action="{% url 'delete_vete' vete.id %}" method="POST">
+                            {% csrf_token %}
+                            <button>Delete</button>
+                        </form>
+                
+                    </div>
+                    {% empty %}
+                    <p>No hay mascotas registradas</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+       
+       
+        
+        
+    </body>
+</html>
